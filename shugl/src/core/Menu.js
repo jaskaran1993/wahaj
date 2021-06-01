@@ -73,9 +73,8 @@ const Menu = (props) => {
                     className='nav-link' 
                     style={{cursor:'pointer', color:'#ffffff'}} 
                     onClick={
-                        ()=>signout(()=>{
-                        props.history.push('/');
-                    })} >Signout</span>
+                        signout    
+                    } >Signout</span>
                 </li>
                     </div>
                 )}

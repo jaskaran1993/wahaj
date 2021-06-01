@@ -1,4 +1,8 @@
 import { global } from "../config";
+import { useHistory } from "react-router-dom";
+
+let history = useHistory();
+
 //This method sends the data to the backend
 export const signup = user => {
     return fetch(`${global.API_HOST}/signup`, {
@@ -44,13 +48,17 @@ export const authenticate = (data, next) => {
 
 
 export const signout = (next) => {
+        
         if(typeof window!=='undefined') {
-                localStorage.removeItem('jwt');
+                localStorage.removeItem('token');
+                localStorage.removeItem('userDetails');
                 next();
                 return fetch(`${global.API_HOST}/signout`, {
                         method:'GET',
                 })
                 .then(response =>{
+
+                        useHistory().history.push("/");;
                         console.log('signout', response)
                 })
                 .catch(err => {console.log(err)})
