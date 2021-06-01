@@ -9,6 +9,10 @@ import VendorProducts from "./containers/VendorProducts/index";
 import AdminHome from "./containers/AdminHome/index";
 import AdminSignin from "./containers/AdminSignin/index";
 import AdminSignup from "./containers/AdminSignup/index";
+<<<<<<< HEAD
+=======
+import AdminUsers from "./containers/AdminUsers/index";
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 import Categories from "./containers/Categories/index";
 import VendorList from "./containers/VendorList/index";
 import {PrivateRoute, PrivateRoute2} from "./components/HOC/PrivateRoute";
@@ -39,6 +43,10 @@ function App() {
           <Route path="/admin/signin" exact component={AdminSignin} />
           <Route path="/admin/categories" exact component={Categories}/>
           <Route path="/admin/vendorlist" exact component={VendorList}/>
+<<<<<<< HEAD
+=======
+          <Route path="/admin/users" exact component={AdminUsers}/>
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
         </Switch>
     </div>
   );

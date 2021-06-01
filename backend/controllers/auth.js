@@ -89,29 +89,30 @@ exports.requireSignin = expressJwt({
 //this checks if the user profile that is trying to access the secret route is the one that is already signed in
 
 exports.isAuth = (req, res, next) => {
-  let user = req.profile && req.auth && req.profile._id == req.auth._id;
-  if (!user) {
-    return res.status(403).json({
-      error: "Access denied",
-    });
-  }
-  next();
-};
+    let user = req.profile && req.auth && req.profile._id == req.auth._id
+    if (!user) {
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
+    next();
+}
 
 exports.isAdmin = (req, res, next) => {
-  if (req.profile.role === 1) {
-    return res.status(403).json({
-      error: "Admin Resource! Access Denied!",
-    });
-  }
-  next();
-};
+    if (req.profile.role === 1) {
+        return res.status(403).json({
+            error: 'Admin Resource! Access Denied!'
+        })
+    }
+    next();
+}
 
 exports.isVendor = (req, res, next) => {
-  if (req.profile.role === 2) {
-    return res.status(403).json({
-      error: "Vendor Resource, Access Denied",
-    });
-  }
-  next();
-};
+    if (req.profile.role === 2) {
+        return res.status(403).json({
+            error: 'Vendor Resource, Access Denied'
+        })
+    }
+    next();
+}
+

@@ -67,4 +67,46 @@ exports.signout = (req, res) => {
   res.status(200).json({
     message: "Signout successfully...!",
   });
+<<<<<<< HEAD
+=======
+};
+
+
+exports.getUsers = async (req, res) => {
+
+  const users = await User.find({ });
+
+res.status(200).json({ users });
+};
+
+
+
+
+exports.userCreate = (req, res) => {
+
+  User.findOne({ email: req.body.email }).exec((error, user) => {
+    if (user)
+      return res.status(400).json({
+        message: "Vendor already registered",
+      });
+      
+      const _user = new User(req.body);
+      
+      _user.save((err, user) => {
+        if (err) {
+
+          console.log(err);
+
+            // return res.status(400).json({
+            //     err: errorHandler(err)
+            // })
+        }
+        user.salt = undefined;
+        user.hashed_password = undefined;
+        res.json({
+            user
+        })
+    })
+  });
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 };

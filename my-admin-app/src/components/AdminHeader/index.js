@@ -32,6 +32,15 @@ export default function Header() {
         const renderLoggedInLinks = () =>{
             return(
             <Nav>
+<<<<<<< HEAD
+=======
+
+            <li className='nav-item'>
+                <NavLink to = {`/admin/users`} className='nav-link'>Users</NavLink>
+            </li>
+
+            
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
             <li className='nav-item'>
             <NavLink to = {`/admin/categories`} className='nav-link'>Categories</NavLink>
             </li>

@@ -4,7 +4,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts , addProduct, deleteProductById } from "../../actions";
+import { getProducts , addProduct, deleteProductById , userCreateAdmin, getUsers} from "../../actions";
 
 
 /**
@@ -14,6 +14,15 @@ import { getProducts , addProduct, deleteProductById } from "../../actions";
 
 const Products = (props) => {
   const [categoryname, setCategoryName] = useState("");
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
@@ -24,34 +33,38 @@ const Products = (props) => {
   const [productDetails, setProductDetails] = useState(null);
   const category = useSelector((state) => state.category);
   const product = useSelector((state) => state.product);
+  
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getProducts());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getUsers());
   }, []);
 
   const handleClose = () => {
     setShow(false);
   };
 
-  const submitProductForm = () => {
-    // const form = new FormData();
-    // form.append("name", name);
-    // form.append("price", price);
-    // form.append("quantity", quantity);
-    // form.append("description", description);
-    // form.append("category", categoryId);
-    const newProduct = {
-        name,
-        price,
-        description,
-        category,
-        productPictures
-    }
-    // for (let pic of productPictures) {
-    //   form.append("productPicture", pic);
-    // }
 
-    dispatch(addProduct(newProduct)).then(() => setShow(false));
+ 
+
+  const submitProductForm = () => {
+    
+    
+    const newObj = {
+      firstName,
+      lastName,
+      phone,
+      email,
+      password,
+      role
+    }
+    
+
+   dispatch(userCreateAdmin(newObj)).then(() => setShow(false));
   };
   const handleShow = () => setShow(true);
   
@@ -74,34 +87,21 @@ const Products = (props) => {
           <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Category</th>
+            <th>Email</th>
+            <th>Role</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {product.products.length > 0
-            ? product.products.map((product) => (
-<<<<<<< HEAD
-              console.log(product.category.name),
-=======
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
-                  <td>{product.description}</td>
-<<<<<<< HEAD
-                  <td>{product.category.name}</td>
-=======
+          {product.users.length > 0
+            ? product.users.map((user) => (
+                <tr key={user._id}>
+                  <td>{user._id}</td>
+                  <td>{user.firstName} </td>
+                  <td>{user.email}</td>
+                  <td>{user.role == "0" ? 'User' : user.role =="1" ? 'Vendor' : 'Admin'}</td>
                   <td>
-                    {/* {product.category.name} */}
-                    asdsd
-                    </td>
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
-                  <td>
-                    <button onClick={() => showProductDetailsModal(product)}>
+                    <button onClick={() => showProductDetailsModal(user)}>
                       info
                     </button>
                     <button
@@ -128,49 +128,54 @@ const Products = (props) => {
       <Modal
         show={show}
         handleClose={handleClose}
-        modalTitle={"Add New Product"}
+        modalTitle={"Add New User"}
         onSubmit={submitProductForm}
       >
         <Input
-          label="Name"
-          value={name}
-          placeholder={`Product Name`}
-          onChange={(e) => setName(e.target.value)}
+          label="First Name"
+          value={firstName}
+          placeholder={`First Name`}
+          onChange={(e) => setFirstName(e.target.value)}
         />
         <Input
-          label="Price"
-          value={price}
-          placeholder={`Price`}
-          onChange={(e) => setPrice(e.target.value)}
+          label="Last Name"
+          value={lastName}
+          placeholder={`Last Name`}
+          onChange={(e) => setLastName(e.target.value)}
         />
         <Input
-          label="Description"
-          value={description}
-          placeholder={`Description`}
-          onChange={(e) => setDescription(e.target.value)}
+          label="Phone"
+          value={phone}
+          placeholder={`Phone`}
+          onChange={(e) => setPhone(e.target.value)}
         />
+        <Input
+          label="Email"
+          value={email}
+          type="email"
+          placeholder={`Email`}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Input
+          label="Password"
+          type="password"
+          value={password}
+          placeholder={`Password`}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        Select Role
         <select
+        label="Select Role"
           className="form-control"
-          value={categoryId}
-          onChange={(e) => setCategoryId(e.target.value)}
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
         >
-          <option>select category</option>
-          {createCategoryList(category.categories).map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.name}
-            </option>
-          ))}
+          <option>Select Role</option>
+          <option key="0" value="0" >User</option>
+          <option key="1" value="1">Vendor</option>
+          <option key="2" value="2" >Admin</option>
         </select>
-        {productPictures.length > 0
-          ? productPictures.map((pic, index) => (
-              <div key={index}>{pic.name}</div>
-            ))
-          : null}
-        <input
-          type="file"
-          name="productPicture"
-          onChange={handleProductPictures}
-        />
+      
       </Modal>
     );
   };
@@ -199,37 +204,14 @@ const Products = (props) => {
         <Row>
           <Col md="6">
             <label className="key">Name</label>
-            <p className="value">{productDetails.name}</p>
+            <p className="value">{productDetails.firstName}</p>
           </Col>
           <Col md="6">
-            <label className="key">Price</label>
-            <p className="value">{productDetails.price}</p>
+            <label className="key">Email</label>
+            <p className="value">{productDetails.email}</p>
           </Col>
         </Row>
-        <Row>
-          <Col md="6">
-            <label className="key">Category</label>
-            <p className="value">{productDetails.category.name}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col md="12">
-            <label className="key">Description</label>
-            <p className="value">{productDetails.description}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <label className="key">Product Pictures</label>
-            <div style={{ display: "flex" }}>
-              {productDetails.productPictures.map((picture) => (
-                <div className="productImgContainer">
-                  <img src={picture.img} alt="" />
-                </div>
-              ))}
-            </div>
-          </Col>
-        </Row>
+         
       </Modal>
     );
   };
@@ -239,8 +221,8 @@ const Products = (props) => {
         <Row>
           <Col md={12}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <h3>Products</h3>
-              <button onClick={handleShow}>Add</button>
+              <h3>Users</h3>
+              <button onClick={handleShow}>Add Users</button>
             </div>
           </Col>
         </Row>

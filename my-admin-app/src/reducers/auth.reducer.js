@@ -35,6 +35,10 @@ export default (state = initState, action) => {
           ...initState
         }
         break;
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
   }
 
   return state;

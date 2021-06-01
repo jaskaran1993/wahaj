@@ -33,6 +33,13 @@ const logout = () =>{
     const renderLoggedInLinks = () =>{
         return(
         <Nav>
+<<<<<<< HEAD
+=======
+            <li className='nav-item'>
+        <NavLink to = {`/vendor/products`} className='nav-link'>Your Bookings</NavLink>
+        </li>
+
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
         <li className='nav-item'>
         <NavLink to = {`/vendor/products`} className='nav-link'>Your Products</NavLink>
         </li>

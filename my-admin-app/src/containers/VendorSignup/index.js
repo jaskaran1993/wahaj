@@ -72,6 +72,17 @@ const Signup = (props) => {
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
+<<<<<<< HEAD
+=======
+
+<Input
+                  label="Phone number"
+                  placeholder="Enter phone number"
+                  value={phone}
+                  type="number"
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
                 <Button variant="primary" type="submit">
                   Submit
                 </Button>

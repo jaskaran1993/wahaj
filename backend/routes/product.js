@@ -10,6 +10,11 @@ const { getProducts, createProduct, productById, read, remove, update } = requir
 const { requireSignin, isAuth, isAdmin } = require('../controllers/auth')
 const { userById } = require('../controllers/user')
 
+<<<<<<< HEAD
+=======
+const middleWare=require('../Middleware/index');
+
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads')
@@ -30,7 +35,11 @@ var upload = multer({
 })
 
 // router.get('/product/:productId', read);
+<<<<<<< HEAD
 router.get("/product/getProducts", getProducts);
+=======
+router.post("/product/getProducts",middleWare.checkToken, getProducts);
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 router.post('/product/create/:userId', requireSignin, isAuth, isAdmin, upload.array('product_pictures', 4), createProduct);
 router.delete('/product/:productId/:userId', requireSignin, isAuth, isAdmin, remove)
 router.put('/product/:productId/:userId', requireSignin, isAuth, isAdmin, update)

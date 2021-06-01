@@ -3,6 +3,10 @@ const { errorHandler } = require('../helpers/dbErrorHandler')
 // const slugify = require('slugify')
 
 exports.create = (req, res) => {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
     const categoryObj = {
         name: req.body.name,
         // slug: `${slugify(req.body.name)}-${shortid.generate()}`
@@ -15,6 +19,10 @@ exports.create = (req, res) => {
     // }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
     const cat = new Category(categoryObj);
     console.log(cat)
     cat.save((err, category) => {

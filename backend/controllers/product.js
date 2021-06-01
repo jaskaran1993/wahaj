@@ -5,7 +5,11 @@ const slugify = require('slugify')
 const _ = require('lodash')
 
 
+<<<<<<< HEAD
 
+=======
+var ObjectId = require('mongodb').ObjectId;
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 
 exports.createProduct = (req, res) => {
     console.log(req.body)
@@ -112,7 +116,16 @@ exports.update = (req, res) => {
 }
 
 exports.getProducts = async (req, res) => {
+<<<<<<< HEAD
     const products = await Product.find({ })
+=======
+
+    const vendorId = req.decoded._id;
+
+
+
+    const products = await Product.find({ "createdBy": ObjectId(vendorId) })
+>>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
       .select("name price description productPictures category")
       .populate({ path: "category", select: "_id name" })
       .exec();
