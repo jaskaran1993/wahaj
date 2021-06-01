@@ -5,6 +5,7 @@ const slugify = require('slugify')
 const _ = require('lodash')
 
 
+var ObjectId = require('mongodb').ObjectId;
 
 exports.createProduct = (req, res) => {
     console.log(req.body)

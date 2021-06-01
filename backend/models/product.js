@@ -47,6 +47,10 @@ const productSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId, 
         ref:'User'
     },
+    status: {
+        type: Number,
+        default: 0
+    },
     updatedAt: Date,
 
     
