@@ -27,8 +27,35 @@ import HotelIcon from '@material-ui/icons/Hotel';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 import { global } from "../config";
 
+// const categories = () => (
+//     <div className='container' style={{marginBottom:'2rem'}}>
+//         <h3>Categories</h3>
+//         {category && category.length > 0 && (
+//         <div className='row'>
+//         {category.map((cat, index) => (
+//               <CategoriesButtons
+//                 id={cat.name}
+//                 startIcon={<GiHut />}
+//                 name={cat.name}
+//                 key={index}
+//               />
 
-export const Farm = () => {
+//               ))}
+//             {/* <CategoriesButtons id='beachHut' startIcon={<GiHut /> } name = 'Beach Hut' />
+//             <CategoriesButtons id='transport' startIcon = {<FaShuttleVan />} name='Transporation'/>
+//             <CategoriesButtons id='hotel' startIcon = {<HotelIcon />} name='Hotels' />
+//             <CategoriesButtons id='photographer' startIcon = {<FaCamera />} name='Photogrphers'/>
+//             <CategoriesButtons id='caterer' startIcon = {<FastfoodIcon />} name='Caterers' />
+//             <CategoriesButtons id='lawnandbanquet' startIcon = {<HotelIcon />} name='Lawns and Banquets' />
+//             <CategoriesButtons id='farmhouse' startIcon = {<HotelIcon />} name='Farmhouses' />
+//             <CategoriesButtons id='eventdecorator' startIcon = {<GiBalloons />} name = 'Event Decorators' /> */}
+//         </div>
+//           )}
+//     </div>
+// )
+
+
+export const Collection = () => {
 
     const [category, setCategory] = useState([]);
 
@@ -48,8 +75,7 @@ export const Farm = () => {
           .catch((err) => console.log(err));
       };
 
-
-    const categories = () => (
+      const categories = () => (
         <div className='container' style={{marginBottom:'2rem'}}>
             <h3>Categories</h3>
             {category && category.length > 0 && (
@@ -63,12 +89,20 @@ export const Farm = () => {
                   />
     
                   ))}
-               
+                {/* <CategoriesButtons id='beachHut' startIcon={<GiHut /> } name = 'Beach Hut' />
+                <CategoriesButtons id='transport' startIcon = {<FaShuttleVan />} name='Transporation'/>
+                <CategoriesButtons id='hotel' startIcon = {<HotelIcon />} name='Hotels' />
+                <CategoriesButtons id='photographer' startIcon = {<FaCamera />} name='Photogrphers'/>
+                <CategoriesButtons id='caterer' startIcon = {<FastfoodIcon />} name='Caterers' />
+                <CategoriesButtons id='lawnandbanquet' startIcon = {<HotelIcon />} name='Lawns and Banquets' />
+                <CategoriesButtons id='farmhouse' startIcon = {<HotelIcon />} name='Farmhouses' />
+                <CategoriesButtons id='eventdecorator' startIcon = {<GiBalloons />} name = 'Event Decorators' /> */}
             </div>
               )}
         </div>
     )
-
+    
+      
     /*const [categories, setCategories] = useState([])
     const [error, setError] = useState(false)
     const [limit, setLimit] = useState(6)
@@ -79,6 +113,7 @@ export const Farm = () => {
         filters:{price:[]}
     })
 
+    
     
     const init = () =>{
         getCategories().then(data=> {

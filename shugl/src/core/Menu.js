@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import {BrowserRouter as Router, Switch, Link, withRouter} from 'react-router-dom';
 import { signout, isAuthenticated} from '../auth';
 import './Menu.css'
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const isActive = (history, path) => {
@@ -82,5 +84,6 @@ const Menu = (props) => {
         </div>
     )
 }
+<ToastContainer />
 
 export default withRouter(Menu);

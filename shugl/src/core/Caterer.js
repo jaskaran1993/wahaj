@@ -26,23 +26,48 @@ import {GiHut, GiBalloons} from 'react-icons/gi'
 import HotelIcon from '@material-ui/icons/Hotel';
 import FastfoodIcon from '@material-ui/icons/Fastfood';
 
-const categories = () => (
-    <div className='container' style={{marginBottom:'2rem'}}>
-        <h3>Categories</h3>
-        <div className='row'>
-            <CategoriesButtons id='beachHut' startIcon={<GiHut /> } name = 'Beach Hut' />
-            <CategoriesButtons id='transport' startIcon = {<FaShuttleVan />} name='Transporation'/>
-            <CategoriesButtons id='hotel' startIcon = {<HotelIcon />} name='Hotels' />
-            <CategoriesButtons id='photographer' startIcon = {<FaCamera />} name='Photogrphers'/>
-            <CategoriesButtons id='caterer' startIcon = {<FastfoodIcon />} name='Caterers' />
-            <CategoriesButtons id='lawnandbanquet' startIcon = {<HotelIcon />} name='Lawns and Banquets' />
-            <CategoriesButtons id='farmhouse' startIcon = {<HotelIcon />} name='Farmhouses' />
-            <CategoriesButtons id='eventdecorator' startIcon = {<GiBalloons />} name = 'Event Decorators' />
-        </div>
-    </div>
-)
+import { global } from "../config";
 
 export const Caterer = () => {
+
+    const [category, setCategory] = useState([]);
+
+    useEffect(() => {
+        getCategories();
+        //getPopularFramhouse();
+      }, []);
+
+      const getCategories = () => {
+        fetch(`${global.API_HOST}/categories`, {
+          method: "GET",
+        })
+          .then((res) => res.json())
+          .then((response) => {
+            setCategory(response);
+          })
+          .catch((err) => console.log(err));
+      };
+
+
+    const categories = () => (
+        <div className='container' style={{marginBottom:'2rem'}}>
+            <h3>Categories</h3>
+            {category && category.length > 0 && (
+            <div className='row'>
+            {category.map((cat, index) => (
+                  <CategoriesButtons
+                    id={cat.name}
+                    startIcon={<GiHut />}
+                    name={cat.name}
+                    key={index}
+                  />
+    
+                  ))}
+               
+            </div>
+              )}
+        </div>
+    )
 
     /*const [categories, setCategories] = useState([])
     const [error, setError] = useState(false)

@@ -1,7 +1,10 @@
 import { global } from "../config";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-let history = useHistory();
+//let history = useHistory();
 
 //This method sends the data to the backend
 export const signup = user => {
@@ -52,17 +55,24 @@ export const signout = (next) => {
         if(typeof window!=='undefined') {
                 localStorage.removeItem('token');
                 localStorage.removeItem('userDetails');
-                next();
+                //next();
                 return fetch(`${global.API_HOST}/signout`, {
                         method:'GET',
                 })
                 .then(response =>{
-
-                        useHistory().history.push("/");;
+                        if(response.data.status == 200) {
+                        toast.success("Logout successfully ..!");
+                        setTimeout(function () {
+                                window.location.href = "/";
+                        },2000);
+                }
+                        
+                        //useHistory().history.push("/");
                         console.log('signout', response)
                 })
                 .catch(err => {console.log(err)})
         }
+        
 }
 
 export const isAuthenticated = () => {

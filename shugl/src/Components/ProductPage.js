@@ -115,9 +115,9 @@ export const ProductPage = () => {
                             <Link to='/view/checkout'>
                                 <Button variant='contained' color='primary' style={{ marginTop: '3rem', width: '11rem', height: '3rem', marginBottom: '2rem', marginLeft: '1rem', marginRight: '1rem', backgroundColor: '#D6324A', color: 'white' }}>Book Now</Button>
                             </Link>
-                            <Link>
+                            {/* <Link>
                                 <Button variant='contained' color='primary' style={{ marginTop: '3rem', width: '11rem', height: '3rem', marginBottom: '2rem', marginLeft: '1rem', marginRight: '1rem', backgroundColor: '#D6324A', color: 'white' }}>Add to Cart</Button>
-                            </Link>
+                            </Link> */}
 
                         </CardActions>
                     </CardContent>

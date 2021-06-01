@@ -66,9 +66,8 @@ exports.signout = (req, res) => {
   res.clearCookie("token");
   res.status(200).json({
     message: "Signout successfully...!",
+    status : 200
   });
-<<<<<<< HEAD
-=======
 };
 
 
@@ -108,5 +107,4 @@ exports.userCreate = (req, res) => {
         })
     })
   });
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
 };
