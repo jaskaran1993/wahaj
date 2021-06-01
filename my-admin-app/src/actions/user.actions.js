@@ -49,9 +49,6 @@ export const signup = (user) => {
             });
         }
     }
-<<<<<<< HEAD
-}
-=======
 }
 
 export const userCreateAdmin = (newObj) => {
@@ -100,4 +97,3 @@ export const getUsers = () => {
   };
 
 };
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc

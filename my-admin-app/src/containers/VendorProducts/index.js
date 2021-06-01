@@ -4,7 +4,7 @@ import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts , addProduct, deleteProductById } from "../../actions";
+import { getProducts , addProduct, deleteProductById, getAllCategory } from "../../actions";
 
 
 /**
@@ -29,33 +29,44 @@ const Products = (props) => {
     dispatch(getProducts());
   }, []);
 
+
+  useEffect(() => {
+    dispatch(getAllCategory());
+  }, []);
+
+console.log('category',category)
+
   const handleClose = () => {
     setShow(false);
   };
 
   const submitProductForm = () => {
-    // const form = new FormData();
-    // form.append("name", name);
-    // form.append("price", price);
+    const form = new FormData();
+    form.append("name", name);
+    form.append("price", price);
     // form.append("quantity", quantity);
-    // form.append("description", description);
-    // form.append("category", categoryId);
-    const newProduct = {
-        name,
-        price,
-        description,
-        category,
-        productPictures
-    }
+    form.append("description", description);
+    form.append("category", categoryId);
+    form.append("image", productPictures);
+    // const newProduct = {
+    //     name,
+    //     price,
+    //     description,
+    //     categoryId,
+    //     productPictures
+    // }
     // for (let pic of productPictures) {
     //   form.append("productPicture", pic);
     // }
 
-    dispatch(addProduct(newProduct)).then(() => setShow(false));
+    console.log('form',form);
+
+    //dispatch(addProduct(form)).then(() => setShow(false));
   };
   const handleShow = () => setShow(true);
   
   const createCategoryList = (categories, options = []) => {
+
     for (let category of categories) {
       options.push({ value: category._id, name: category.name });
     }
@@ -64,7 +75,9 @@ const Products = (props) => {
   };
 
   const handleProductPictures = (e) => {
-    setProductPictures([...productPictures, e.target.files[0]]);
+    // setProductPictures([...productPictures, e.target.files[0]]);
+    setProductPictures(e.target.files[0]);
+
   };
 
   const renderProducts = () => {
@@ -83,23 +96,15 @@ const Products = (props) => {
         <tbody>
           {product.products.length > 0
             ? product.products.map((product) => (
-<<<<<<< HEAD
-              console.log(product.category.name),
-=======
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.price}</td>
                   <td>{product.description}</td>
-<<<<<<< HEAD
-                  <td>{product.category.name}</td>
-=======
                   <td>
                     {/* {product.category.name} */}
                     asdsd
                     </td>
->>>>>>> 75f5a1e0c16b8139c352adf3fb6cd94a263766dc
                   <td>
                     <button onClick={() => showProductDetailsModal(product)}>
                       info
@@ -149,6 +154,8 @@ const Products = (props) => {
           placeholder={`Description`}
           onChange={(e) => setDescription(e.target.value)}
         />
+
+        Select Category
         <select
           className="form-control"
           value={categoryId}
@@ -161,11 +168,14 @@ const Products = (props) => {
             </option>
           ))}
         </select>
+        <br></br>
+
         {productPictures.length > 0
           ? productPictures.map((pic, index) => (
               <div key={index}>{pic.name}</div>
             ))
           : null}
+
         <input
           type="file"
           name="productPicture"
