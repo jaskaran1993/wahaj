@@ -1,18 +1,8 @@
+import { ADD_PRODUCT_API, GET_PRODUCT_API, DELETE_PRODUCT_API,ADMIN_PRODUCT_API } from "../components/commonFunction/Api";
+import { getCommonHeaders_res } from "../components/commonFunction/CommonMethod";
 import axios from "../helpers/axios";
 import { productConstants } from "./constants";
 
-
-const getCommonHeaders_res = ()=> {
-  const accessToken = localStorage.getItem('token');
-  const commonHeaders =
-    {
-      'Content-Type': 'application/json'
-    };
-    if(accessToken) {
-      commonHeaders.Authorization = `Bearer ${accessToken}`;
-    }
-    return commonHeaders;
-}
 
 // new action
 export const getProducts = () => {
@@ -23,14 +13,42 @@ export const getProducts = () => {
       headers,
     };
 
-console.log('config',config)
     try {
       dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
 
-      const res = await axios.post(`product/getProducts`,{},{headers: config.headers});
-
+      const res = await axios.post(GET_PRODUCT_API,{},{headers: config.headers});
+      
+      console.log(res,"rrrrrrrrrrrrrr");
       if (res.status === 200) {
-        const { products } = res.data;
+        const products = res.data.data;
+        dispatch({
+          type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
+          payload: { products },
+        });
+      } else {
+        dispatch({ type: productConstants.GET_ALL_PRODUCTS_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAdminProducts = () => {
+  return async (dispatch) => {
+
+    const headers = getCommonHeaders_res();
+    const config = {
+      headers,
+    };
+
+    try {
+      dispatch({ type: productConstants.GET_ALL_PRODUCTS_REQUEST });
+
+      const res = await axios.post(ADMIN_PRODUCT_API,{},{headers: config.headers});
+      
+      if (res.status === 200) {
+        const products = res.data.data;
         dispatch({
           type: productConstants.GET_ALL_PRODUCTS_SUCCESS,
           payload: { products },
@@ -45,13 +63,20 @@ console.log('config',config)
 };
 
 // modified actrion
-export const addProduct = (form) => {
+export const addProduct = (productData) => {
   return async (dispatch) => {
+
+    const headers = getCommonHeaders_res();
+    const config = {
+      headers,
+    };
+
     try {
       dispatch({ type: productConstants.ADD_PRODUCT_REQUEST });
-      const res = await axios.post(`product/create`, form);
-      if (res.status === 201) {
+      const res = await axios.post(ADD_PRODUCT_API,productData,{headers: config.headers});
+      if (res.status === 200) {
         dispatch({ type: productConstants.ADD_PRODUCT_SUCCESS });
+        console.log("yesssssss");
         dispatch(getProducts());
       } else {
         dispatch({ type: productConstants.ADD_PRODUCT_FAILURE });
@@ -64,12 +89,20 @@ export const addProduct = (form) => {
 
 export const deleteProductById = (payload) => {
     return async (dispatch) => {
+
+      const headers = getCommonHeaders_res();
+      const config = {
+        headers,
+      };
+
+      
       try {
-        const res = await axios.delete(`product/deleteProductById`, {
-          data: { payload },
-        });
+        const res = await axios.post(DELETE_PRODUCT_API,payload,{headers: config.headers});
+        // const res = await axios.delete(DELETE_PRODUCT_API, {
+        //   data: { payload },
+        // });
         dispatch({ type: productConstants.DELETE_PRODUCT_BY_ID_REQUEST });
-        if (res.status === 202) {
+        if (res.status === 200) {
           dispatch({ type: productConstants.DELETE_PRODUCT_BY_ID_SUCCESS });
           dispatch(getProducts());
         } else {

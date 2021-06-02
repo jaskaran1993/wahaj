@@ -9,6 +9,7 @@ import { global } from "../config";
 //import 'react-toastify/dist/ReactToastify.min.css';
 
 const Signup = () => {
+  const history = useHistory();
   const [values, setValues] = useState({
     firstName: "",
     lastName: "",
@@ -17,14 +18,7 @@ const Signup = () => {
     phone: "",
     success: "false",
   });
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    phone,
-    success,
-  } = values;
+  const { firstName, lastName, email, password, phone, success } = values;
 
   const [error, setError] = useState("");
 
@@ -58,41 +52,47 @@ const Signup = () => {
       return false;
     }
     if (userData.lastName == "") {
-        toast.error("Please fill your last name!");
-        return false;
-      }
-      if (userData.email == "") {
-        toast.error("Please fill your last email!");
-        return false;
-      }
-      if (userData.phone == "") {
-        toast.error("Please fill your last phone number !");
-        return false;
-      }
-      
+      toast.error("Please fill your last name!");
+      return false;
+    }
+    if (userData.email == "") {
+      toast.error("Please fill your last email!");
+      return false;
+    }
+    if (userData.phone == "") {
+      toast.error("Please fill your last phone number !");
+      return false;
+    }
+
     axios
-      .post(global.API_HOST + "/signup", {
+      .post(global.API_HOST + "auth/userSignup", {
         firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
         password: userData.password,
         phone: userData.phone,
-        role: "0",
       })
 
       .then((response) => {
-        if(response.data.status == 400){
-                toast.error(response.data.message);
-                setError(response.data.message);
-                <Redirect to="/signin" />;
-               // useHistory.push('signin');
+        if (response.status == 203) {
+          toast.error(response.data.message);
+          setError(response.data.message);
+          redirect();
+          // useHistory.push('signin');
         }
-        else{
-                toast.success("Sign up successfully..!");
+        if (response.status == 200) {
+          toast.success(response.data.message);
+          setTimeout(function () {
+            //                  window.location.href = "/";
+            redirect();
+          }, 2000);
         }
-        console.log(response.data);
       })
       .catch((err) => console.log(err));
+  };
+
+  const redirect = () => {
+    history.push("/signin");
   };
 
   const signUpForm = () => (

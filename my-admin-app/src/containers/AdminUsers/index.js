@@ -46,6 +46,7 @@ const Products = (props) => {
 
   const handleClose = () => {
     setShow(false);
+    
   };
 
 
@@ -94,17 +95,17 @@ const Products = (props) => {
         </thead>
         <tbody>
           {product.users.length > 0
-            ? product.users.map((user) => (
+            ? product.users.map((user,key) => (
                 <tr key={user._id}>
-                  <td>{user._id}</td>
+                  <td>{key+1}</td>
                   <td>{user.firstName} </td>
                   <td>{user.email}</td>
                   <td>{user.role == "0" ? 'User' : user.role =="1" ? 'Vendor' : 'Admin'}</td>
                   <td>
-                    <button onClick={() => showProductDetailsModal(user)}>
+                    <button onClick={() => showProductDetailsModal(user)} class="btn btn-md btn-primary">
                       info
                     </button>
-                    <button
+                    {/* <button
                       onClick={() => {
                         const payload = {
                           productId: product._id,
@@ -113,7 +114,7 @@ const Products = (props) => {
                       }}
                     >
                       del
-                    </button>
+                    </button> */}
                   </td>
                 </tr>
               ))
@@ -220,9 +221,9 @@ const Products = (props) => {
       <Container>
         <Row>
           <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }} class="m-3">
               <h3>Users</h3>
-              <button onClick={handleShow}>Add Users</button>
+              <button onClick={handleShow} class="btn btn-md btn-warning">Add Users</button>
             </div>
           </Col>
         </Row>

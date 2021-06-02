@@ -28,28 +28,28 @@ export default function IconLabelButtons(props) {
 
   const routeChange = () => {
 
-    if (props.id === 'Farmhouses') {
+    if (props.id === 'farm') {
       history.push('/view/farmhouse')
     }
-    else if (props.id === 'Beach Hut') {
+    else if (props.id === 'beachhut') {
       history.push('/view/beachhut')
     }
-    else if (props.id === 'Hotels') {
+    else if (props.id === 'hotel') {
       history.push('/view/hotel')
     }
-    else if (props.id === 'Caterers') {
+    else if (props.id === 'caterer') {
       history.push('/view/caterer')
     }
-    else if (props.id === 'Event Decorators') {
+    else if (props.id === 'eventdecorator') {
       history.push('/view/eventdecorator')
     }
-    else if (props.id === 'Photogrphers') {
+    else if (props.id === 'photographer') {
       history.push('/view/photographer')
     }
-    else if (props.id === 'Transporation') {
+    else if (props.id === 'transport') {
       history.push('/view/transport')
     }
-    else if (props.id === 'Lawns and Banquets') {
+    else if (props.id === 'lawn and banuqet') {
       history.push('/view/lawnandbanquet')
 
     }

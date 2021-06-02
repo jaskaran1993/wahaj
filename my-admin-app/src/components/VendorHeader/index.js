@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Jumbotron, Nav, Navbar, NavDropdown, Container} from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import {Link, NavLink, Redirect} from 'react-router-dom'
 import { signout } from '../../actions'
 
 
+let authTrue = false;
 export default function Header() {
     
 const auth = useSelector(state => state.auth)
+
 const dispatch = useDispatch();
+
+
+    
+useEffect (() =>{
+    var loggedToken = localStorage.getItem("token");
+
+    if(!!loggedToken)
+    {
+        return authTrue = true;
+    }
+},[])
 
 const logout = () =>{
     dispatch(signout());
@@ -57,7 +70,7 @@ const logout = () =>{
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">  
                     </Nav>
-                        {auth.authenticate ? renderLoggedInLinks() : renderNonLoggedInLinks()}
+                        {authTrue  ?  renderLoggedInLinks() : renderNonLoggedInLinks()}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

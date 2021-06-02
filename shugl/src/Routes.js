@@ -54,7 +54,7 @@ const Routes = () => {
                 <Route path='/view/caterer' exact component={Caterer} />
                 <Route path='/view/lawnandbanquet' exact component={LawnAndBanuqet} />
                 <Route path='/view/transport' exact component={Transport} />
-                <Route path='/view/productPage' exact component={ProductPage} />
+                <Route path='/view/productPage/:id' exact component={ProductPage} />
                 <Route path='/view/checkout' exact component={CheckOut} />
 
             </Switch>

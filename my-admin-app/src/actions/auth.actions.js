@@ -1,17 +1,19 @@
 import { authConstants, userConstants } from "./constants";
 import axios from "../helpers/axios";
 import {Redirect} from "react-router";
+import { ADMIN_LOGIN_API, VENDOR_LOGIN_API ,VENDOR_SIGNUP_API} from "../components/commonFunction/Api";
+
 
 export const login = (user) => {
   console.log(user);
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    const res = await axios.post(`/vendor/signin`, {
+    const res = await axios.post(VENDOR_LOGIN_API, {
       ...user
     });
 
     if (res.status === 200) {
-      const { token, user } = res.data;
+      const { token, user } = res.data.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       dispatch({
@@ -35,18 +37,19 @@ export const signup = (user) => {
   console.log(user);
   return async (dispatch) => {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST});
-    const res = await axios.post(`/vendor/signup`, {
+    const res = await axios.post(VENDOR_SIGNUP_API, {
       ...user
     });
 
-    if (res.status === 201) {
-      const { message } = res.data.me;
+    if (res.status === 200) {
+      console.log(res.data.message)
       dispatch({
         type: userConstants.USER_REGISTER_SUCCESS,
         payload: {  
           user
         }
       });
+
     } else {
       if (res.status === 400) {
         dispatch({
@@ -92,12 +95,12 @@ export const adminlogin = (user) => {
   console.log(user);
   return async (dispatch) => {
     dispatch({ type: authConstants.LOGIN_REQUEST });
-    const res = await axios.post(`/admin/signin`, {
+    const res = await axios.post(ADMIN_LOGIN_API, {
       ...user
     });
 
     if (res.status === 200) {
-      const { token, user } = res.data;
+      const { token, user } = res.data.data;
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       dispatch({

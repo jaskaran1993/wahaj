@@ -5,6 +5,9 @@ import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { getProducts , addProduct, deleteProductById, getAllCategory } from "../../actions";
+import { UPLOAD_PRODUCT_IMAGE_API } from "../../components/commonFunction/Api";
+import { getCommonHeaders_res } from "../../components/commonFunction/CommonMethod";
+import axios from "axios";
 
 
 /**
@@ -30,45 +33,57 @@ const Products = (props) => {
   }, []);
 
 
+
   useEffect(() => {
     dispatch(getAllCategory());
   }, []);
 
-console.log('category',category)
+// console.log('category',category)
 
+const htmlOutput = (productStatus) =>{
+  return productStatus == 0 ? (<span class='badge badge-pill badge-primary'>Pending</span>) : (<span class='badge badge-pill badge-success'>Approved</span>)
+}
   const handleClose = () => {
     setShow(false);
   };
 
-  const submitProductForm = () => {
+  const submitProductForm = async () => {  
+    
+    const headers = getCommonHeaders_res();
+    const config = {
+      headers,
+    };
+
     const form = new FormData();
-    form.append("name", name);
-    form.append("price", price);
-    // form.append("quantity", quantity);
-    form.append("description", description);
-    form.append("category", categoryId);
     form.append("image", productPictures);
-    // const newProduct = {
-    //     name,
-    //     price,
-    //     description,
-    //     categoryId,
-    //     productPictures
-    // }
-    // for (let pic of productPictures) {
-    //   form.append("productPicture", pic);
-    // }
+    const {data:{data}} = await axios.post(UPLOAD_PRODUCT_IMAGE_API,form,{headers: config.headers});
+   
+    var image_name =  data.filename;
 
-    console.log('form',form);
+    const productData = {
+      productImage : image_name,
+      productName :name,
+      description :description,
+      categoryId: categoryId,
+      productPrice: price
+    };
 
-    //dispatch(addProduct(form)).then(() => setShow(false));
+    setName('');
+    setPrice('');
+    setDescription('');
+    setCategoryId('');
+    setProductPictures('');
+
+    dispatch(addProduct(productData)).then(() => setShow(false));
+    dispatch(getProducts());
   };
+
   const handleShow = () => setShow(true);
   
   const createCategoryList = (categories, options = []) => {
 
     for (let category of categories) {
-      options.push({ value: category._id, name: category.name });
+      options.push({ value: category._id, name: category.categoryName });
     }
 
     return options;
@@ -90,25 +105,23 @@ console.log('category',category)
             <th>Price</th>
             <th>Description</th>
             <th>Category</th>
+            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {product.products.length > 0
-            ? product.products.map((product) => (
+            ? product.products.map((product,key) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>{product.price}</td>
+                   <td>{key+1}</td>
+                  <td>{product.productName}</td>
+                  <td>{product.productPrice}</td>
                   <td>{product.description}</td>
+                  <td>{product.categoryId.categoryName}</td>
+                  <td>{ htmlOutput(product.status)}</td>
+                 
                   <td>
-                    {/* {product.category.name} */}
-                    asdsd
-                    </td>
-                  <td>
-                    <button onClick={() => showProductDetailsModal(product)}>
-                      info
-                    </button>
+
                     <button
                       onClick={() => {
                         const payload = {
@@ -116,8 +129,8 @@ console.log('category',category)
                         };
                         dispatch(deleteProductById(payload));
                       }}
-                    >
-                      del
+                      class="btn btn-md btn-danger">
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -248,9 +261,9 @@ console.log('category',category)
       <Container>
         <Row>
           <Col md={12}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }} class="m-3">
               <h3>Products</h3>
-              <button onClick={handleShow}>Add</button>
+              <button onClick={handleShow}  class="btn btn-md btn-warning">Add Product</button>
             </div>
           </Col>
         </Row>

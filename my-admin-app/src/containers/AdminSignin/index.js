@@ -6,7 +6,6 @@ import { adminlogin, isUserLoggedIn} from "../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router";
 
-
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

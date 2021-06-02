@@ -33,15 +33,18 @@ export const Photographer = () => {
       }, []);
 
       const getCategories = () => {
-        fetch(`${global.API_HOST}/categories`, {
-          method: "GET",
+        fetch(`${global.API_HOST}user/getCategory`, {
+          method: "POST",
         })
           .then((res) => res.json())
           .then((response) => {
-            setCategory(response);
+            if(response.status == true){
+              setCategory(response.data);
+            }
           })
           .catch((err) => console.log(err));
       };
+
 
 
     const categories = () => (
@@ -51,9 +54,9 @@ export const Photographer = () => {
             <div className='row'>
             {category.map((cat, index) => (
                   <CategoriesButtons
-                    id={cat.name}
+                    id={cat.categoryName}
                     startIcon={<GiHut />}
-                    name={cat.name}
+                    name={cat.categoryName}
                     key={index}
                   />
     
