@@ -6,6 +6,7 @@ import VendorSignin from "./containers/VendorSignin/index";
 import VendorHome from "./containers/VendorHome/index";
 import VendorSignup from "./containers/VendorSignup/index";
 import VendorProducts from "./containers/VendorProducts/index";
+import VendorOrders from "./containers/VendorOrders/index";
 import AdminHome from "./containers/AdminHome/index";
 import AdminSignin from "./containers/AdminSignin/index";
 import AdminSignup from "./containers/AdminSignup/index";
@@ -13,6 +14,7 @@ import AdminUsers from "./containers/AdminUsers/index";
 import Categories from "./containers/Categories/index";
 import VendorList from "./containers/VendorList/index";
 import AdminProducts from "./containers/AdminProducts/index";
+import AdminOrders from "./containers/AdminOrders/index";
 import {PrivateRoute, PrivateRoute2} from "./components/HOC/PrivateRoute";
 import {useEffect} from 'react';
 import { useDispatch, useSelector } from "react-redux";
@@ -31,7 +33,9 @@ function App() {
     
   }, []);
 
-
+  const token = window.localStorage.getItem('token');
+  const role = window.localStorage.getItem('type');
+  
   return (
     <div className="App">
         <Switch>
@@ -39,13 +43,15 @@ function App() {
           <Route path="/vendor/signin" exact component={VendorSignin} />
           <Route path="/vendor/signup" exact component={VendorSignup} />
           <PrivateRoute path="/vendor/products" exact component={VendorProducts} />
+          <PrivateRoute path="/vendor/orders" exact component={VendorOrders} />
           <PrivateRoute2 path="/admin" exact component={AdminHome} />
-          <Route path="/admin/signup" exact component={AdminSignup} />
+          <PrivateRoute2 path="/admin/signup" exact component={AdminSignup} />
           <Route path="/admin/signin" exact component={AdminSignin} />
-          <Route path="/admin/categories" exact component={Categories}/>
-          <Route path="/admin/vendorlist" exact component={VendorList}/>
-          <Route path="/admin/productlist" exact component={AdminProducts}/>
-          <Route path="/admin/users" exact component={AdminUsers}/>
+          <PrivateRoute2 path="/admin/categories" exact component={Categories}/>
+          <PrivateRoute2 path="/admin/vendorlist" exact component={VendorList}/>
+          <PrivateRoute2 path="/admin/productlist" exact component={AdminProducts}/>
+          <PrivateRoute2 path="/admin/users" exact component={AdminUsers}/>
+          <PrivateRoute2 path="/admin/orders" exact component={AdminOrders} />
         </Switch>
     </div>
   );

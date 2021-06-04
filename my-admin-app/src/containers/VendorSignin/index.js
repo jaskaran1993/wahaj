@@ -17,6 +17,7 @@ export default function Signin() {
 
   const dispatch = useDispatch();
  
+  const history = useHistory();
   useEffect(() =>{
     if(!auth.authenticate){
     dispatch(isUserLoggedIn());
@@ -32,9 +33,13 @@ export default function Signin() {
     dispatch(login(user));
     }
 
+    
     if(auth.authenticate){
-      return <Redirect to = {'/'} />
+ 
+      window.location.href = '/';
     }
+
+
 
   return (
     <div>

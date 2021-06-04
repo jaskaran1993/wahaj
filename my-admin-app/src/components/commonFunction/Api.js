@@ -15,6 +15,10 @@ export const ADMIN_PRODUCT_API = getApiUrl("admin/allProducts");
 export const APPROVE_PRODUCT_API = getApiUrl("admin/productApprove");
 export const USER_ADD_API = getApiUrl("admin/addUsers");
 export const USER_LIST_API = getApiUrl("admin/allUsers");
+export const VENDOR_ORDER_GET_API = getApiUrl("vendor/getOrders");
+export const APPROVE_ORDER_API = getApiUrl("vendor/orderApprove");
+
+export const ADMIN_ORDER_GET_API = getApiUrl("admin/allOrders");
 
 
 

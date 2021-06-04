@@ -56,7 +56,7 @@ const Signin = () => {
           localStorage.setItem("token", response.data.data.token);
           localStorage.setItem(
             "userDetails",
-            JSON.stringify(response.data.data.email)
+            JSON.stringify(response.data.data.user)
           );
           setTimeout(function () {
             //                  window.location.href = "/";

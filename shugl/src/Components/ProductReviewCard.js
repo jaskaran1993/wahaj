@@ -62,6 +62,7 @@ export default function ProductReviewCard(props) {
   return (
     <Card
       className={classes.root}
+      id="proClass"
       style={{ borderRadius: "10px 10px", marginBottom: "2rem" }}
     >
       <Link to={`/view/productPage/${props.url}`}>

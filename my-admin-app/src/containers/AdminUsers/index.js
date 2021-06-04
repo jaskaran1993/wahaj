@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from "react";
-import Layout from "../../components/VendorLayout";
+import AdminLayout from '../../components/AdminLayout'
+
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
@@ -118,7 +119,7 @@ const Products = (props) => {
                   </td>
                 </tr>
               ))
-            : null}
+            : (<tr><td colspan="5" class="text-center p-4 bold">No Users</td></tr>)}
         </tbody>
       </Table>
     );
@@ -217,7 +218,7 @@ const Products = (props) => {
     );
   };
   return (
-    <Layout>
+    <AdminLayout>
       <Container>
         <Row>
           <Col md={12}>
@@ -233,7 +234,7 @@ const Products = (props) => {
       </Container>
       {renderAddProductModal()}
       {renderProductDetailsModal()}
-    </Layout>
+    </AdminLayout>
   );
 };
 

@@ -1,4 +1,6 @@
 import React, { useState , useEffect } from "react";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 import Layout from "../../components/VendorLayout";
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
@@ -67,7 +69,7 @@ const htmlOutput = (productStatus) =>{
       categoryId: categoryId,
       productPrice: price
     };
-
+    toastr.success("Product Added Successfully");
     setName('');
     setPrice('');
     setDescription('');
@@ -110,7 +112,7 @@ const htmlOutput = (productStatus) =>{
           </tr>
         </thead>
         <tbody>
-          {product.products.length > 0
+          {product.products && product.products.length > 0
             ? product.products.map((product,key) => (
                 <tr key={product._id}>
                    <td>{key+1}</td>
@@ -135,7 +137,7 @@ const htmlOutput = (productStatus) =>{
                   </td>
                 </tr>
               ))
-            : null}
+            : (<tr><td colspan="5" class="text-center p-4 bold">No Records</td></tr>)}
         </tbody>
       </Table>
     );

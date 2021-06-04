@@ -1,7 +1,10 @@
 import { authConstants, userConstants } from "./constants";
 import axios from "../helpers/axios";
 import {Redirect} from "react-router";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 import { ADMIN_LOGIN_API, VENDOR_LOGIN_API ,VENDOR_SIGNUP_API} from "../components/commonFunction/Api";
+
 
 
 export const login = (user) => {
@@ -15,7 +18,7 @@ export const login = (user) => {
     if (res.status === 200) {
       const { token, user } = res.data.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('type', 1);
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
         payload: {
@@ -34,7 +37,7 @@ export const login = (user) => {
 };
 
 export const signup = (user) => {
-  console.log(user);
+  
   return async (dispatch) => {
     dispatch({ type: userConstants.USER_REGISTER_REQUEST});
     const res = await axios.post(VENDOR_SIGNUP_API, {
@@ -42,13 +45,14 @@ export const signup = (user) => {
     });
 
     if (res.status === 200) {
-      console.log(res.data.message)
+     
       dispatch({
         type: userConstants.USER_REGISTER_SUCCESS,
         payload: {  
           user
         }
       });
+      toastr.success("Vendor Added Successfully");
 
     } else {
       if (res.status === 400) {
@@ -56,6 +60,7 @@ export const signup = (user) => {
           type: userConstants.USER_REGISTER_FAILURE,
           payload: { error: res.data.error }
         });
+        toastr.warning('Faild, Try again');
       }
     }
   };
@@ -102,7 +107,7 @@ export const adminlogin = (user) => {
     if (res.status === 200) {
       const { token, user } = res.data.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('type', 2);
       dispatch({
         type: authConstants.LOGIN_SUCCESS,
         payload: {

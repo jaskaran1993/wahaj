@@ -1,8 +1,9 @@
-import { productConstants, userConstants } from "../actions/constants";
+import { productConstants, orderConstants, userConstants } from "../actions/constants";
 
 const initState = {
     products: [],
     users: [],
+    orders:[],
 };
 
 export default (state = initState, action) => {
@@ -21,6 +22,13 @@ export default (state = initState, action) => {
             state = {
                 ...state,
                 users: action.payload.users
+            }
+          break;
+
+          case orderConstants.GET_ALL_ORDER_SUCCESS:
+            state = {
+                ...state,
+                orders: action.payload.orders
             }
           break;
           

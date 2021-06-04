@@ -1,4 +1,6 @@
 import { authConstants, userConstants } from "./constants";
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 import axios from "../helpers/axios";
 import { USER_ADD_API, USER_LIST_API } from "../components/commonFunction/Api";
 import { getCommonHeaders_res } from "../components/commonFunction/CommonMethod";
@@ -67,6 +69,7 @@ export const userCreateAdmin = (newObj) => {
       const res = await axios.post(USER_ADD_API,newObj,{headers: config.headers});
       if (res.status === 200) {
         // dispatch({ type: productConstants.ADD_PRODUCT_SUCCESS });
+        toastr.success("User Added Successfully");
         dispatch(getUsers());
       } else {
         // dispatch({ type: productConstants.ADD_PRODUCT_FAILURE });

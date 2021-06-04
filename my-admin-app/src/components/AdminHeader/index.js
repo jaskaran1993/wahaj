@@ -6,10 +6,12 @@ import { signout } from '../../actions'
 import { authTokenCheck } from '../commonFunction/CommonMethod'
 
 let authTrue = false;
+let userType = 0;
 export default function Header() {
    
 useEffect (() =>{
     var loggedToken = localStorage.getItem("token");
+    userType = localStorage.getItem("type");
 
     if(!!loggedToken)
     {
@@ -22,6 +24,9 @@ useEffect (() =>{
     const logout = () =>{
         dispatch(signout());
         
+        window.location.href="/";
+    
+        
     }
         const renderNonLoggedInLinks = () =>{
             return( 
@@ -30,9 +35,9 @@ useEffect (() =>{
                 <li className='nav-item'>
                     <NavLink to={`/admin/signin`} className='nav-item' className='nav-link'>Admin Signin</NavLink>
                 </li>
-                <li className='nav-item'>
+                {/* <li className='nav-item'>
                 <NavLink to={`/admin/signup`} className='nav-item' className='nav-link'>Admin Signup</NavLink>
-                </li>
+                </li> */}
                 <li className='nav-item'>
                 <NavLink to={`/`} className='nav-item' className='nav-link'>Vendor Dashboard</NavLink>
                 </li>
@@ -47,13 +52,13 @@ useEffect (() =>{
                 <NavLink to = {`/admin/users`} className='nav-link'>Users</NavLink>
             </li>
             <li className='nav-item'>
+                <NavLink to = {`/admin/orders`} className='nav-link'>Orders</NavLink>
+            </li>
+            <li className='nav-item'>
             <NavLink to = {`/admin/productlist`} className='nav-link'>Products</NavLink>
             </li>
             <li className='nav-item'>
             <NavLink to = {`/admin/categories`} className='nav-link'>Categories</NavLink>
-            </li>
-            <li className='nav-item'>
-            <NavLink to = {`/admin/vendorlist`} className='nav-link'>Vendor List</NavLink>
             </li>
             <li className='nav-item'>
             <NavLink to = {`/admin/signin`} className='nav-link' onClick={logout}>Signout</NavLink>
@@ -72,7 +77,7 @@ useEffect (() =>{
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
                     </Nav>
-                    {authTrue ? renderLoggedInLinks() : renderNonLoggedInLinks()}
+                    {authTrue  && userType == 2 ? renderLoggedInLinks() : renderNonLoggedInLinks()}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

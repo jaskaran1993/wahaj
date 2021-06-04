@@ -1,7 +1,7 @@
-import { ADD_PRODUCT_API, GET_PRODUCT_API, DELETE_PRODUCT_API,ADMIN_PRODUCT_API } from "../components/commonFunction/Api";
+import { ADD_PRODUCT_API, GET_PRODUCT_API, DELETE_PRODUCT_API,ADMIN_PRODUCT_API, VENDOR_ORDER_GET_API, ADMIN_ORDER_GET_API } from "../components/commonFunction/Api";
 import { getCommonHeaders_res } from "../components/commonFunction/CommonMethod";
 import axios from "../helpers/axios";
-import { productConstants } from "./constants";
+import { productConstants, orderConstants} from "./constants";
 
 
 // new action
@@ -33,6 +33,69 @@ export const getProducts = () => {
     }
   };
 };
+
+export const getOrders = () => {
+
+  console.log('jas')
+  return async (dispatch) => {
+
+    const headers = getCommonHeaders_res();
+    const config = {
+      headers,
+    };
+
+    try {
+      dispatch({ type: orderConstants.GET_ALL_ORDER_REQUEST });
+
+      const res = await axios.post(VENDOR_ORDER_GET_API,{},{headers: config.headers});
+   
+      console.log(res,"tttttttttt");
+      if (res.status === 200) {
+        const orders = res.data.data;
+        dispatch({
+          type: orderConstants.GET_ALL_ORDER_SUCCESS,
+          payload: { orders },
+        });
+      } else {
+        dispatch({ type: orderConstants.GET_ALL_ORDER_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAdminOrders = () => {
+
+  console.log('admin')
+  return async (dispatch) => {
+
+    const headers = getCommonHeaders_res();
+    const config = {
+      headers,
+    };
+
+    try {
+      dispatch({ type: orderConstants.GET_ALL_ORDER_REQUEST });
+
+      const res = await axios.post(ADMIN_ORDER_GET_API,{},{headers: config.headers});
+   
+    
+      if (res.status === 200) {
+        const orders = res.data.data;
+        dispatch({
+          type: orderConstants.GET_ALL_ORDER_SUCCESS,
+          payload: { orders },
+        });
+      } else {
+        dispatch({ type: orderConstants.GET_ALL_ORDER_FAILURE });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 
 export const getAdminProducts = () => {
   return async (dispatch) => {

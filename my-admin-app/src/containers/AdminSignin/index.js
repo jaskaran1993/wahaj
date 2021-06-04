@@ -30,7 +30,9 @@ export default function Signin() {
     }
 
     if(auth.authenticate){
-      return <Redirect to = {'/admin'} />
+
+ 
+        window.location.href = '/admin';
     }
 
   return (

@@ -110,8 +110,6 @@ export const CheckOut = () => {
       'Authorization': 'Bearer '+localStorage.getItem("token"),
       'Content-Type' : 'application/json'
     }
-    console.log(productData,'asljdklaf');
-    console.log(token,"token");
 
     const response = await axios.post(
         global.API_HOST + "user/orderProduct",
@@ -168,7 +166,7 @@ export const CheckOut = () => {
       <div className="row">
         <div className="col col-md-3">
           <h6>Dates</h6>
-          <p color="text-muted">{`${product.stateDate}- ${product.endDate}`}</p>
+          <p color="text-muted">{`${product.startDate}- ${product.endDate}`}</p>
         </div>
         <div className="col col-md-3">
           <h7>Edit</h7>

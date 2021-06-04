@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect,useState } from 'react';
 import Layout from "./Layout";
 import { signout } from "../auth/index";
 import CategoriesButtons from "../Components/CategoriesButtons";
@@ -22,6 +22,8 @@ import Search from "./Search";
 import { global } from "../config";
 
 const Home = () => {
+
+
   useEffect(() => {
     getCategories();
     getPhotographer();
@@ -29,7 +31,7 @@ const Home = () => {
     getCaterer();
     getBeachhut();
     getHotel();
-  }, []);
+  },[]);
 
   const [category, setCategory] = useState([]);
   const [farm, setFarm] = useState([]);
@@ -37,7 +39,6 @@ const Home = () => {
   const [photographer, setPhotographer] = useState([]);
   const [beachhut, setBeachhut] = useState([]);
   const [hotel, setHotel] = useState([]);
-  //const [category, setCategory] = useState([]);
 
   const getCategories = () => {
     fetch(`${global.API_HOST}user/getCategory`, {
@@ -158,7 +159,7 @@ const Home = () => {
           <div className="row">
             {category.map((cat, index) => (
               <CategoriesButtons
-                id={cat.categoryName}
+                id={cat._id}
                 startIcon={<GiHut />}
                 name={cat.categoryName}
                 key={index}
@@ -179,10 +180,11 @@ const Home = () => {
             <ProductReviewCard
               name={farmPro.productName}
               price={`${farmPro.productPrice}/-per person`}
-              imgUrl={farmPro.productImage}
+              imgUrl={global.imgUrl + farmPro.productImage}
               // address="Malir, Karachi"
               url={farmPro._id}
               description={farmPro.description}
+              key={index}
             />
           ))}
         </div>
@@ -194,10 +196,11 @@ const Home = () => {
             <ProductReviewCard
               name={catererPro.productName}
               price={`${catererPro.productPrice}/-per person`}
-              imgUrl={catererPro.productImage}
+              imgUrl={global.imgUrl + catererPro.productImage}
               // address="Malir, Karachi"
               url={catererPro._id}
               description={catererPro.description}
+              key={index}
             />
           ))}
         </div>
@@ -212,10 +215,11 @@ const Home = () => {
             <ProductReviewCard
               name={photographerPro.productName}
               price={`${photographerPro.productPrice}/-per person`}
-              imgUrl={photographerPro.productImage}
+              imgUrl={global.imgUrl + photographerPro.productImage}
               // address="Malir, Karachi"
               url={photographerPro._id}
               description={photographerPro.description}
+              key={index}
             />
           ))}
         </div>
@@ -227,10 +231,11 @@ const Home = () => {
             <ProductReviewCard
               name={beachhutPro.productName}
               price={`${beachhutPro.productPrice}/-per person`}
-              imgUrl={beachhutPro.productImage}
+              imgUrl={global.imgUrl + beachhutPro.productImage}
               // address="Malir, Karachi"
               url={beachhutPro._id}
               description={beachhutPro.description}
+              key={index}
             />
           ))}
         </div>
@@ -242,10 +247,11 @@ const Home = () => {
             <ProductReviewCard
               name={hotelPro.productName}
               price={`${hotelPro.productPrice}/-per person`}
-              imgUrl={hotelPro.productImage}
+              imgUrl={global.imgUrl + hotelPro.productImage}
               // address="Malir, Karachi"
               url={hotelPro._id}
               description={hotelPro.description}
+              key={index}
             />
           ))}
         </div>

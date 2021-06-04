@@ -22,7 +22,7 @@ export default function CheckoutForm(props) {
     } else {
       setNeedToredirect(false);
     }
-  }, []);
+  });
   const cardStyle = {
     style: {
       base: {
@@ -57,7 +57,7 @@ export default function CheckoutForm(props) {
     //console.log (props.secret());
     ev.preventDefault();
     setProcessing(true);
-    let userEmail = JSON.parse(localStorage.getItem("userDetails") );
+    let userDetails = JSON.parse(localStorage.getItem("userDetails") );
     
     const payload = await stripe.confirmCardPayment(props.secret, {
       payment_method: {
@@ -71,7 +71,7 @@ export default function CheckoutForm(props) {
             state: 'chandigarh',
             country: 'IN',
           },
-          name: userEmail
+          name: userDetails.name
         },
       },
     });

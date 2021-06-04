@@ -22,6 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const ProductPage = (props) => {
   const [product, setProduct] = useState([]);
+  const [reviews, setReviews] = useState([]);
 
   const history = useHistory();
 
@@ -34,7 +35,7 @@ export const ProductPage = (props) => {
 
   useEffect(() => {
     getSingleProduct(props.match.params.id);
-  }, []);
+  },[props.match.params.id]);
 
   const getSingleProduct = (id) => {
     axios
@@ -43,7 +44,8 @@ export const ProductPage = (props) => {
       })
       .then((response) => {
         if (response.data.status == true) {
-          setProduct(response.data.data);
+          setProduct(response.data.data.productDetails);
+          setReviews(response.data.data.reviews);
         }
       })
       .catch((err) => console.log(err));
@@ -52,18 +54,18 @@ export const ProductPage = (props) => {
   const images = () => (
     <>
       <Row style={{ marginBottom: "2rem" }}>
-        <Col xs={6} md={4}>
+        <Col xs={12} style ={{textAlign:'center'}} >
           <Image
-            src={farmImage}
+            src={global.imgUrl+ product.productImage}
             style={{
               height: "300px",
               maxWidth: "105%",
               maxHeight: "100%",
-              borderRadius: "30px 0px 0px 30px",
+            
             }}
           />
         </Col>
-        <Col xs={6} md={2}>
+        {/* <Col xs={6} md={2}>
           <Image
             src={farmImage1}
             style={{ height: "145px", maxWidth: "110%", maxHeight: "100%" }}
@@ -104,7 +106,7 @@ export const ProductPage = (props) => {
               borderRadius: "0px 30px 30px 0px",
             }}
           />
-        </Col>
+        </Col> */}
       </Row>
     </>
   );
@@ -129,15 +131,20 @@ export const ProductPage = (props) => {
   );
 
   const userReviews = () => (
-    <div>
-      <h4>Reviews</h4>
-      <h6>Ahmed Mallick</h6>
-      <p>This is a very good place for family and guests</p>
-      <h6>Faraz Shahid</h6>
-      <p>A very good experience</p>
-      <h6>Khalid Khan</h6>
-      <p>Safe and secure and a good place to visit with friends</p>
-    </div>
+    <>
+    <h4>Reviews</h4>
+    {reviews && reviews.length > 0 ? (
+      
+      <div className="row">
+        {reviews.map((review, index) => (
+          <div>
+          <h6>{review.reviewerName}</h6>
+          <p>{review.review}</p>   
+          </div>
+        ))}
+      </div>
+    ): "No review found..!"}
+    </>
   );
 
   const useStyles = makeStyles((theme) => ({

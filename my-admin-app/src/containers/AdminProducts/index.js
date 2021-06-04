@@ -1,5 +1,6 @@
 import React, { useState , useEffect } from "react";
-import Layout from "../../components/VendorLayout";
+import AdminLayout from '../../components/AdminLayout'
+
 import { Container, Row, Col, Table } from "react-bootstrap";
 import Input from "../../components/UI/Input";
 import Modal from "../../components/UI/Modal";
@@ -73,10 +74,10 @@ const htmlOutput = (productStatus) =>{
           </tr>
         </thead>
         <tbody>
-          {product.products.length > 0
-            ? product.products.map((product) => (
+          {product.products && product.products.length > 0
+            ? product.products.map((product,key) => (
                 <tr key={product._id}>
-                   <td>{product._id}</td>
+                   <td>{key+1}</td>
                   <td>{product.productName}</td>
                   <td>{product.productPrice}</td>
                   <td>{product.description}</td>
@@ -93,7 +94,7 @@ const htmlOutput = (productStatus) =>{
                     }}
                     class="btn btn-md btn-primary">
                     Approve
-                  </button> : <button type="button" class="btn btn-lg btn-primary" disabled>
+                  </button> : <button type="button" class="btn btn-md btn-primary" disabled>
                     Approved 
                   </button>}
                     
@@ -109,7 +110,7 @@ const htmlOutput = (productStatus) =>{
 
 
   return (
-    <Layout>
+    <AdminLayout>
       <Container>
         <Row>
           <Col md={12}>
@@ -122,7 +123,7 @@ const htmlOutput = (productStatus) =>{
           <Col>{renderProducts()}</Col>
         </Row>
       </Container>
-    </Layout>
+    </AdminLayout>
   );
 
 };

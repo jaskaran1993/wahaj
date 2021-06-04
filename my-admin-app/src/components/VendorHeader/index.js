@@ -6,6 +6,7 @@ import { signout } from '../../actions'
 
 
 let authTrue = false;
+let userType = 0;
 export default function Header() {
     
 const auth = useSelector(state => state.auth)
@@ -17,7 +18,9 @@ const dispatch = useDispatch();
 useEffect (() =>{
     var loggedToken = localStorage.getItem("token");
 
-    if(!!loggedToken)
+    userType = localStorage.getItem("type");
+ 
+    if(!!loggedToken )
     {
         return authTrue = true;
     }
@@ -25,7 +28,7 @@ useEffect (() =>{
 
 const logout = () =>{
     dispatch(signout());
-    
+    window.location.href="/";
 }
     const renderNonLoggedInLinks = () =>{
         return( 
@@ -47,7 +50,7 @@ const logout = () =>{
         return(
         <Nav>
             <li className='nav-item'>
-        <NavLink to = {`/vendor/products`} className='nav-link'>Your Bookings</NavLink>
+        <NavLink to = {`/vendor/orders`} className='nav-link'>Your Bookings</NavLink>
         </li>
 
         <li className='nav-item'>
@@ -70,7 +73,7 @@ const logout = () =>{
                     <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">  
                     </Nav>
-                        {authTrue  ?  renderLoggedInLinks() : renderNonLoggedInLinks()}
+                        {authTrue && userType == 1 ? renderLoggedInLinks() : renderNonLoggedInLinks()}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
